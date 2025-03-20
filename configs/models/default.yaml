@@ -1,0 +1,93 @@
+project:
+  project: starvector-im2svg
+  use_wandb: false
+  entity: abc
+  copy_code: false
+model:
+  max_length: 8192
+  model_name: null # in case of creating a new model, set this to None (null)
+  starcoder_model_name: bigcode/starcoderbase-1b
+  pretrained: true
+  image_encoder_type: clip
+  use_flash_attn: true
+  adapter_norm: layer_norm
+  init_type: glorot
+  dropout: 0.1
+  task: im2svg
+  transformer_layer_cls: None # fsdp specific
+  use_cache: false
+training:
+  save_model_epochs: 1
+  checkpointing_steps: 500
+  checkpoints_total_limit: 3
+  model_precision: bf16
+  resume_from_checkpoint: false
+  continue_training: false
+  n_epochs: 4
+  lr: 0.00001
+  gradient_accumulation_steps: 4
+  lr_scheduler: cosine
+  lr_warmup_steps: 10
+  adam_beta1: 0.95
+  adam_beta2: 0.999
+  adam_weight_decay: 1.0e-06
+  adam_epsilon: 1e-08
+  optimizer: adamw
+  start_generation_at_step: 0
+  train_image_encoder: true
+  train_LLM: true
+  use_gradient_checkpointing: false
+fsdp:
+  enable: false
+data:
+  num_workers: 4
+  train:
+    batch_size: 2
+    target: starvector.data.stacksvg.SVGStackDataset
+    params:
+      split: train
+      dataset_name: ServiceNow/svg-stack
+      im_size: 224
+      num_samples: -1
+      transforms: false
+      select_dataset_name: false
+  test:
+    batch_size: 2
+    target: starvector.data.stacksvg.SVGStackDataset
+    params:
+      split: test
+      dataset_name: ServiceNow/svg-stack
+      im_size: 224
+      num_samples: -1
+      transforms: false
+      select_dataset_name: false
+generation:
+  max_length: 8192
+  min_length: 10
+  num_beams: 3
+  num_captions: 1
+  num_generations_different_temp: 1.5
+  start_temperature: 0.5
+  repetition_penalty: 1.0
+  length_penalty: 1.0
+  temperature: 1.0
+  top_p: 0.9
+  use_nucleus_sampling: true
+  im_size: 224
+  dpi: 2
+  scale: 300
+  num_samples_to_generate: -1
+  log_wandb_images: true
+  start_generation_at_step: -1
+metrics:
+  L2: true
+  Masked-L2: false
+  LPIPS: true
+  SSIM: true
+  FID: false
+  FID_clip: false
+  CLIPScore: false
+  CountTokenLength: true
+  ratio_post_processed: false
+  ratio_non_compiling: false
+  DinoScore: true

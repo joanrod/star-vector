@@ -1,0 +1,12 @@
+metrics:
+  L2: true
+  Masked-L2: false
+  LPIPS: true
+  SSIM: true
+  FID: false
+  FID_clip: false
+  CLIPScore: false
+  CountTokenLength: true
+  ratio_post_processed: false
+  ratio_non_compiling: false
+  DinoScore: true

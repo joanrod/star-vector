@@ -1,0 +1,71 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "starvector"
+version = "1.0"
+description = "Generating Scalable Vector Graphics Code from Images and Text"
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+]
+dependencies = [
+    "torch==2.5.1", 
+    "torchvision==0.20.1",
+    "transformers==4.49.0", 
+    "tokenizers==0.21.1", 
+    "sentencepiece==0.2.0",    
+    "accelerate",
+    "pydantic==2.10", 
+    "markdown2[all]", 
+    "numpy<2.0.0", 
+    "scikit-learn==1.2.2",
+    "gradio==3.36.1", 
+    "gradio_client==0.2.9",
+    "requests", 
+    "httpx==0.24.0", 
+    "uvicorn", 
+    "fastapi",
+    "svgpathtools==1.6.1", 
+    "seaborn==0.12.2",
+    "taming-transformers", 
+    "lpips", 
+    "cairosvg", 
+    "beautifulsoup4", 
+    "webcolors", 
+    "tqdm",
+    "omegaconf", 
+    "open-clip-torch", 
+    "noise", 
+    "datasets", 
+    "scikit-image", 
+    "fairscale", 
+    "lxml", 
+    "torch-fidelity", 
+    "clip-openai",
+    "scipy==1.11.1",
+    "sentence-transformers",
+    "reportlab",
+    "svglib",
+    "Pillow",
+    "protobuf",
+    "openai",
+    "flash_attn==2.7.3"
+
+]
+
+[project.optional-dependencies]
+train = ["deepspeed", "ninja", "wandb"]
+
+[project.urls]
+"Homepage" = "https://starvector.github.io"
+"Bug Tracker" = "https://github.com/joanrod/starvector/issues"
+
+[tool.setuptools.packages.find]
+exclude = ["assets*", "benchmark*", "docs", "dist*", "playground*", "scripts*", "tests*"]
+
+[tool.wheel]
+exclude = ["assets*", "benchmark*", "docs", "dist*", "playground*", "scripts*", "tests*"]

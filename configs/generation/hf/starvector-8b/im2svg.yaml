@@ -1,0 +1,50 @@
+# General configuration
+run:
+  project_name: "starvector-RL-eval"
+  out_dir: "eval_results"
+  device: cuda
+  report_to: wandb
+  run_id: test-run
+  log_images: false
+
+# Model configuration
+model:
+  name: "starvector/starvector-8b-im2svg"
+  from_checkpoint: false
+  generation_engine: "hf"
+  task: im2svg
+  torch_dtype: bfloat16
+  # image_processor: siglip_384
+
+# Dataset configuration
+dataset:
+  dataset_name: starvector/svg-stack-RL
+  config_name: null
+  split: test
+  batch_size: 2
+  num_workers: 4
+  im_size: 384
+  num_samples: -1
+
+# vllm https://docs.vllm.ai/en/v0.5.5/dev/sampling_params.html
+# hf https://huggingface.co/docs/transformers/main_classes/text_generation
+generation_params:
+  max_length: 16000
+  min_length: 10
+  num_beams: 1
+  temperature: 0.7
+  generation_sweep: false # Controls multi-temperature sampling, rank based sampling
+    # num_generations_different_temp: 1
+    # min_temperature: 0.0
+    # max_temperature: 0.5
+  num_captions: 1
+  repetition_penalty: 1.0
+  length_penalty: 0.5
+  presence_penalty: 0.0 # only used in vllm 
+  frequency_penalty: 0.0
+  top_p: 0.95
+  do_sample: true # turn this off for greedy decoding
+  use_nucleus_sampling: true
+  logit_bias: 5 # if this is not false, the model will be biased to the svg_end_token_id
+  stream: false
+

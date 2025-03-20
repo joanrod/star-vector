@@ -1,0 +1,96 @@
+project:
+  project: starvector-1b-text2svg
+  use_wandb: false
+  entity: joanrod
+  copy_code: false
+model:
+  max_length: 8192
+  model_name: starvector/starvector-1b-im2svg
+  starcoder_model_name: bigcode/starcoderbase-1b
+  pretrained: true
+  image_encoder_type: clip
+  use_flash_attn: true
+  adapter_norm: layer_norm
+  init_type: normal
+  dropout: 0.1
+  task: text2svg
+  transformer_layer_cls: Starcoder2DecoderLayer # fsdp specific
+  use_cache: false
+training:
+  save_model_epochs: 1
+  checkpointing_steps: 500
+  checkpoints_total_limit: 5
+  model_precision: bf16
+  resume_from_checkpoint: false
+  continue_training: false
+  n_epochs: 2
+  lr: 2e-5
+  gradient_accumulation_steps: 8
+  lr_scheduler: cosine
+  lr_warmup_steps: 100
+  adam_beta1: 0.95
+  adam_beta2: 0.999
+  adam_weight_decay: 1.0e-06
+  adam_epsilon: 1e-08
+  optimizer: adamw
+  use_gradient_checkpointing: false
+  train_image_encoder: false
+  train_LLM: true
+fsdp:
+  enable: false # TODO: set this reasonably, i.e., false only if you want to use DDP or have PyTorch < 2.1
+  cpu_offload: false
+  sharding_strategy: hsdp
+  backward_prefetch: BACKWARD_PRE
+  use_orig_params: true
+  sync_module_states: true
+  forward_prefetch: false
+  cpu_ram_efficient_loading: true
+data:
+  num_workers: 16
+  train:
+    batch_size: 1
+    target: starvector.data.stacksvg.SVGStackDataset
+    params:
+      split: train
+      dataset_name: starvector/text2svg-stack
+      im_size: 224
+      num_samples: -1
+      transforms: false
+      select_dataset_name: false
+      image_processor: siglip_384
+  test:
+    batch_size: 4
+    target: starvector.data.stacksvg.SVGStackDataset
+    params:
+      split: test
+      dataset_name: starvector/text2svg-stack
+      im_size: 224
+      num_samples: 64
+      transforms: false
+      select_dataset_name: false
+      image_processor: siglip_384
+generation:
+  max_length: 10000
+  min_length: 10
+  num_beams: 3
+  temperature: 1.0
+  num_captions: 1
+  repetition_penalty: 1.0
+  length_penalty: 0.5
+  top_p: 0.95
+  use_nucleus_sampling: true
+  im_size: 384
+  dpi: 2
+  scale: 300
+metrics:
+  L2: false
+  Masked-L2: false
+  LPIPS: false
+  SSIM: false
+  FID: false
+  FID_clip: false
+  CLIPScore: true
+  CountTokenLength: true
+  ratio_post_processed: false
+  ratio_non_compiling: false
+  DinoScore: false

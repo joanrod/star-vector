@@ -44,7 +44,7 @@ class ImageTrainProcessor(ImageBaseProcessor):
         self.size = size
 
         self.transform = transforms.Compose([
-            transforms.Lambda(lambda img: img.convert("RGB") if img.mode == "RGBA" else img),
+            transforms.Lambda(lambda img: self._rgba_to_rgb_white(img) if img.mode == "RGBA" else img),
             transforms.Lambda(lambda img: self._pad_to_square(img)),
             transforms.Resize(self.size, interpolation=InterpolationMode.BICUBIC),
             transforms.ToTensor(),
@@ -61,6 +61,11 @@ class ImageTrainProcessor(ImageBaseProcessor):
         padding = [(max_dim - width) // 2, (max_dim - height) // 2]
         padding += [max_dim - width - padding[0], max_dim - height - padding[1]]
         return pad(img, padding, fill=255)  # Assuming white padding
+
+    def _rgba_to_rgb_white(self, img):
+        background = Image.new("RGB", img.size, (255, 255, 255))
+        background.paste(img, mask=img.split()[3])
+        return background
 
 
 def encode_image_base64(pil_image):

@@ -36,7 +36,7 @@ class StarCoderModel(nn.Module):
 
     def init_tokenizer(self, model_name):
         self.tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=False)
-        # Incude padding and eos tokens in the vocabulary
+        # Include padding and eos tokens in the vocabulary
         if self.tokenizer.eos_token_id is None:
             self.tokenizer.add_special_tokens({"eos_token": "[EOS]"})
         if self.tokenizer.pad_token_id is None:

@@ -214,7 +214,7 @@ def setup_train_env_variables(config):
 
 def load_fsdp_plugin(config, model):
     if config.fsdp.enable:
-        # get mixed precsion dtype
+        # get mixed precision dtype
         mixed_precision_dtype = {
             "fp16": torch.float16,
             "bf16": torch.bfloat16,

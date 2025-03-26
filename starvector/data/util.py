@@ -1,6 +1,6 @@
 from PIL import Image
 from torchvision import transforms
-from torchvision.transforms.functional import InterpolationMode
+from torchvision.transforms.functional import InterpolationMode, pad
 import numpy as np
 import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup
@@ -44,6 +44,8 @@ class ImageTrainProcessor(ImageBaseProcessor):
         self.size = size
 
         self.transform = transforms.Compose([
+            transforms.Lambda(lambda img: self._rgba_to_rgb_white(img) if img.mode == "RGBA" else img),
+            transforms.Lambda(lambda img: self._pad_to_square(img)),
             transforms.Resize(self.size, interpolation=InterpolationMode.BICUBIC),
             transforms.ToTensor(),
             self.normalize
@@ -51,6 +53,20 @@ class ImageTrainProcessor(ImageBaseProcessor):
 
     def __call__(self, item):
         return self.transform(item)
+
+    def _pad_to_square(self, img):
+        # Calculate padding to make the image square
+        width, height = img.size
+        max_dim = max(width, height)
+        padding = [(max_dim - width) // 2, (max_dim - height) // 2]
+        padding += [max_dim - width - padding[0], max_dim - height - padding[1]]
+        return pad(img, padding, fill=255)  # Assuming white padding
+
+    def _rgba_to_rgb_white(self, img):
+        background = Image.new("RGB", img.size, (255, 255, 255))
+        background.paste(img, mask=img.split()[3])
+        return background
+
 
 def encode_image_base64(pil_image):
     if pil_image.mode == 'RGBA':

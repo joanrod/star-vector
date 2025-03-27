@@ -52,7 +52,7 @@ StarVector is a multimodal vision-language model for Scalable Vector Graphics (S
 
 ### Multimodal Architecture
 
-StarVector uses a multimodal architecture to process images and text. When performing Image-to-SVG (or image vectorization), the image is projected into visual tokens, and SVG code is generated. When performing Text-to-SVG, the model only recieves the text instruction (no image is provided), and a novel SVG is created. The LLM is based of StarCoder, which we leverage to transfer coding skills to SVG generation.
+StarVector uses a multimodal architecture to process images and text. When performing Image-to-SVG (or image vectorization), the image is projected into visual tokens, and SVG code is generated. When performing Text-to-SVG, the model only receives the text instruction (no image is provided), and a novel SVG is created. The LLM is based of StarCoder, which we leverage to transfer coding skills to SVG generation.
 
 <div align="center">
   <img src="assets/starvector-arch.png" alt="starvector" style="width: 700px; display: block; margin-left: auto; margin-right: auto;" />

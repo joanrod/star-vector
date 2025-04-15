@@ -29,7 +29,6 @@ from transformers import (
     AutoModelForCausalLM
 )
 from starvector.model.starvector_arch import StarVectorConfig, StarVectorForCausalLM
-from starvector.train.zero_to_fp32 import convert_zero_checkpoint_to_fp32_state_dict
 
 
 def is_deepspeed(checkpoint_dir):
@@ -39,6 +38,7 @@ def is_deepspeed(checkpoint_dir):
 def consolidate_deepspeed_checkpoint(checkpoint_dir):
     path_state_dict = os.path.join(checkpoint_dir, 'weights.pt')
     if not os.path.exists(path_state_dict):
+        from starvector.train.zero_to_fp32 import convert_zero_checkpoint_to_fp32_state_dict
         convert_zero_checkpoint_to_fp32_state_dict(checkpoint_dir, path_state_dict)
 
 def load_checkpoint(model, checkpoint_dir):

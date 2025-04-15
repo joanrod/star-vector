@@ -3,6 +3,7 @@ from transformers import (
     AutoConfig, 
     AutoModelForCausalLM, 
     AutoTokenizer,
+    utils
     )
 
 class StarCoderModel(nn.Module):
@@ -21,10 +22,11 @@ class StarCoderModel(nn.Module):
         model_config.eos_token_id = self.tokenizer.eos_token_id
         model_config.pad_token_id = self.tokenizer.pad_token_id
         model_config.bos_token_id = self.tokenizer.bos_token_id
-        try:
+        
+        if utils.is_flash_attn_2_available():
             model_config.flash_attention = config.use_flash_attn
             model_config._attn_implementation = "flash_attention_2"
-        except ImportError:
+        else:
             config.use_flash_attn = False
         
         # model = GPTBigCodeForCausalLM(config=model_config)

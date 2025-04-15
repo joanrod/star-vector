@@ -8,7 +8,7 @@ run:
 
 # Model configuration
 model:
-  name: "starvector/starvector-1b-im2svg"   # Required: Model name for HF-based model
+  name: "starvector/starvector-8b-im2svg"   # Required: Model name for HF-based model
   from_checkpoint: false
   generation_engine: "vllm"
   task: im2svg
@@ -17,7 +17,7 @@ model:
 
 # Dataset configuration
 dataset:
-  dataset_name: starvector/svg-stack-RL  # Required: Name of the dataset to evaluate on
+  dataset_name: starvector/svg-stack  # Required: Name of the dataset to evaluate on
   config_name: null # in bigodcs set Image2SVG
   split: test
   batch_size: 8

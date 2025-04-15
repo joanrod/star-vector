@@ -284,12 +284,12 @@ Let's start with the evaluation for StarVector-1B and StarVector-8B on SVG-Stack
 # StarVector-1B on SVG-Stack, using the HuggingFace backend 
 python starvector/validation/validate.py \
 config=configs/generation/hf/starvector-1b/im2svg.yaml \
-dataset.name=starvector/svg-stack
+dataset.dataset_name=starvector/svg-stack
 
 # StarVector-8B on SVG-Stack, using the vanilla HuggingFace generation API
 python starvector/validation/validate.py \
 config=configs/generation/hf/starvector-8b/im2svg.yaml \
-dataset.name=starvector/svg-stack
+dataset.dataset_name=starvector/svg-stack
 ```
 
 ### vLLM Backend
@@ -308,12 +308,12 @@ Then, launch the using the vllm config file (it uses StarVectorVLLMValidator):
 # StarVector-1B
 python starvector/validation/validate.py \
 config=configs/generation/vllm/starvector-1b/im2svg.yaml \
-dataset.name=starvector/svg-stack
+dataset.dataset_name=starvector/svg-stack
 
 # StarVector-8B
 python starvector/validation/validate.py \
 config=configs/generation/vllm/starvector-8b/im2svg.yaml \
-dataset.name=starvector/svg-stack
+dataset.dataset_name=starvector/svg-stack
 ```
 
 We provide evaluation scripts in `scripts/eval/*`

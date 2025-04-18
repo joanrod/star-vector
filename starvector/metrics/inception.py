@@ -23,7 +23,7 @@ class InceptionV3(nn.Module):
     # Maps feature dimensionality to their output blocks indices
     BLOCK_INDEX_BY_DIM = {
         64: 0,   # First max pooling features
-        192: 1,  # Second max pooling featurs
+        192: 1,  # Second max pooling features
         768: 2,  # Pre-aux classifier features
         2048: 3  # Final average pooling features
     }
@@ -171,7 +171,7 @@ def _inception_v3(*args, **kwargs):
         # Just a caution against weird version strings
         version = (0,)
 
-    # Skips default weight inititialization if supported by torchvision
+    # Skips default weight initialization if supported by torchvision
     # version. See https://github.com/mseitzer/pytorch-fid/issues/28.
     if version >= (0, 6):
         kwargs['init_weights'] = False

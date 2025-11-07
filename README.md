@@ -36,7 +36,7 @@
 
 ## 🔥 News
 - Sep 2024:  **RLRF Accepted at NeurIPS 2025**,
-  - Our follow-up work to StarVector, RLRF, has been accepted to NeurIPS 2025! Check out the paper [[Link](https://arxiv.org/abs/2505.20793)]
+   - Our follow-up work to StarVector, RLRF, has been accepted to NeurIPS 2025! Check out the paper [[Link](https://arxiv.org/abs/2505.20793)]
 - March 2025: **StarVector Accepted at CVPR 2025**,
   - StarVector has been accepted at CVPR 2025! Check out the paper [[Link](https://arxiv.org/abs/2312.11556)]
   - Check out our website for more information [[Link](https://starvector.github.io/)]
